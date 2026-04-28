@@ -1,0 +1,28 @@
+package com.customfit.demo.controller;
+
+
+import com.customfit.demo.model.User;
+import com.customfit.demo.service.UserService;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "*") // Utile pour tester avec ton futur frontend
+public class AuthController {
+
+    private final UserService userService;
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/register")
+    public User register(@RequestBody User user) {
+        return userService.inscription(user);
+    }
+
+    @PostMapping("/login")
+    public User login(@RequestParam String email, @RequestParam String password) {
+        return userService.connexion(email, password);
+    }
+}
